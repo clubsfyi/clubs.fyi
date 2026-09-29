@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta content="initial-scale=1,width=device-width" name="viewport">
+		<title>clubs.fyi</title>
+		<style type="text/css">
+			::-webkit-scrollbar { display: none; }
+			* { border: none; box-sizing: border-box; border-radius: 0; line-height: inherit; margin: 0; outline: none; padding: 0; }
+			body { line-height: 0; }
+		</style>
+		<link href="https://fonts.gstatic.com" rel="preconnect">
+		<link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+		<script type="text/javascript">
+			window.addEventListener('load', () => {
+				var H = _ => {
+					var div = document.createElement('div');
+					div.innerHTML = (_ = _||{}).html||'';
+					Object.assign(div.style, _.style||{});
+
+					return div;
+				};
+
+				var ROOT = null;
+				var ROOT_PADDING_TOP = innerWidth < 480 ? 32 : 64;
+				var ROOT_PADDING_LEFT_RIGHT = innerWidth < 640 ? innerWidth < 480 ? 24 : 32 : 64;
+				var ROOT_WIDTH = innerWidth - ROOT_PADDING_LEFT_RIGHT*2;
+				document.body.appendChild(ROOT = H({ style:{ padding:ROOT_PADDING_TOP + 'px 0 0 ' + ROOT_PADDING_LEFT_RIGHT + 'px' } }));
+
+				ROOT.appendChild(H({ html:'clubs.fyi', style:{ 'background-color':'#000', color:'#FFF', display:'inline-block', 'font-family':'monospace', 'font-size':'24px', 'font-weight':400, 'line-height':'24px', padding:'8px 24px 8px 24px', 'user-select':'none' } }));
+				ROOT.appendChild(H());
+				ROOT.appendChild(H({ html:'<span style="color: #3CF;">new</span> communities', style:{ 'background-color':'#000', color:'#FFF', display:'inline-block', 'font-family':'Major Mono Display, monospace', 'font-size':'24px', 'font-weight':900, 'line-height':'24px', padding:'8px 24px 12px 24px', 'user-select':'none' } }));
+				ROOT.appendChild(H());
+				ROOT.appendChild(H({ html:'Re-weaving the social fabric.', style:{ 'background-color':'#DDD', color:'#000', display:'inline-block', 'font-family':'monospace', 'font-size':'14px', 'font-weight':400, 'line-height':'18px', padding:'12px 24px 4px 24px', 'user-select':'none', width:ROOT_WIDTH + 'px', 'max-width':'720px' } }));
+				ROOT.appendChild(H());
+				ROOT.appendChild(H({ html:'2026', style:{ 'background-color':'#DDD', color:'#000', display:'inline-block', 'font-family':'monospace', 'font-size':'14px', 'font-weight':400, 'line-height':'18px', padding:'4px 24px 12px 24px', 'user-select':'none', width:ROOT_WIDTH + 'px', 'max-width':'720px' } }));
+
+				ROOT.appendChild(H({ style:{ height:'64px' } }));
+				ROOT.appendChild(H({ html:'+ more', style:{ 'background-color':'#000', color:'#FFF', display:'inline-block', 'font-family':'monospace', 'font-size':'24px', 'font-weight':400, 'line-height':'24px', padding:'8px 24px 8px 24px', 'user-select':'none' } }));
+				ROOT.appendChild(H());
+				ROOT.appendChild(H({ html:'<a href="https://moralestapia.com/" style="color: inherit; text-decoration: none;" target="_blank">moralestapia.com</a>', style:{ 'background-color':'#DDD', color:'#000', display:'inline-block', 'font-family':'monospace', 'font-size':'14px', 'font-weight':400, 'line-height':'18px', padding:'12px 24px 12px 24px', 'user-select':'none', width:ROOT_WIDTH + 'px', 'max-width':'720px' } }));
+			});
+		</script>
+	</head>
+	<body></body>
+</html>
