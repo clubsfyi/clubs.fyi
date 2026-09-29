@@ -1,13 +1,13 @@
 {
-  "type": "module",
-  "private": true,
-  "scripts": {
-    "build": "rm -rf public && swc src -d public --copy-files --strip-leading-paths",
-    "dev": "live-server src --no-browser"
-  },
   "devDependencies": {
     "@swc/cli": "latest",
     "@swc/core": "latest",
     "live-server": "latest"
-  }
+  },
+  "private": true,
+  "scripts": {
+    "build": "rm -rf public && spack --config ./spack.config.cjs --mode production --target browser && cp src/index.html public/index.html",
+    "dev": "live-server src --no-browser"
+  },
+  "type": "module"
 }
