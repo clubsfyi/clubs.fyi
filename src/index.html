@@ -10,39 +10,62 @@
 			* { box-sizing:border-box; margin:0; padding:0; }
 			body { background:var(--paper); color:var(--ink); font-family:Helvetica,Arial,sans-serif; font-size:14px; line-height:1.8; }
 			a { color:inherit; }
-			.page { margin:0 auto; max-width:1100px; padding:24px 32px 64px 32px; }
-			.brand { font-size:28px; font-weight:700; }
-			.nav { display:flex; flex-wrap:wrap; gap:8px 28px; font-size:14px; }
-			.nav.bold { font-weight:700; }
+			.page { margin:0 auto; max-width:1100px; padding:24px 24px 64px 24px; }
+			.brand { align-items:center; display:flex; font-size:28px; font-weight:700; gap:12px; justify-content:space-between; }
+			.brand .mark { align-items:center; display:flex; gap:12px; }
+			.brand button { background:none; border:none; color:inherit; cursor:pointer; font-size:14px; font-weight:400; }
+			.tagline { font-size:14px; margin:8px 0 0 0; }
+			.nav { display:flex; flex-wrap:wrap; gap:8px 4px; font-size:14px; }
+			.nav.bold { align-items:baseline; font-weight:700; }
+			.nav.bold + .nav.bold { margin-top:16px; }
+			.nav button { background:none; border:none; color:inherit; cursor:pointer; font:inherit; padding:0 8px; }
+			.nav button.on { background:var(--ink); color:var(--paper); }
+			#clear { background:var(--ink); color:var(--paper); flex-shrink:0; }
+			.search { background:var(--paper); border:none; border-bottom:1px solid var(--ink); color:inherit; font:inherit; margin-left:auto; width:220px; }
+			.search::placeholder { color:#8b9cd2; }
+			.search:focus { outline:none; }
+			#filters { display:flex; flex-wrap:wrap; gap:8px 6px; }
+			#tag-filters { display:flex; flex:1; flex-wrap:wrap; gap:8px 6px; }
+			.kind { color:#5a6fc0; flex-shrink:0; font-size:12px; font-weight:400; letter-spacing:1px; text-align:left; text-transform:uppercase; width:40px; }
+			.nav button:hover { background:rgba(42,64,153,.08); }
+			.nav button.on:hover, #clear:hover { background:var(--ink); }
+			.nav button:focus-visible { outline:2px solid var(--ink); outline-offset:2px; }
+			.modal { align-items:center; backdrop-filter:blur(6px); background:rgba(251,248,241,.75); display:flex; inset:0; justify-content:center; position:fixed; z-index:10; }
+			.modal.off { display:none; }
+			.modal-box { background:var(--paper); border:1px solid var(--ink); max-width:520px; padding:32px; position:relative; width:calc(100% - 48px); }
+			.modal-head { align-items:center; display:flex; justify-content:space-between; margin:0 0 16px 0; }
+			.modal-head .label { margin:0; }
+			.close { background:none; border:none; color:inherit; cursor:pointer; font:inherit; font-size:24px; font-weight:700; line-height:1; }
+			.city.off { display:none; }
+			.club.off { display:none; }
+			#status { font-size:20px; font-weight:700; text-align:center; }
 			.rule { border:none; border-top:1px solid var(--ink); margin:12px 0 24px 0; }
 			.layout { display:flex; gap:48px; }
-			.rail { font-size:13px; white-space:nowrap; writing-mode:vertical-rl; }
 			.main { flex:1; min-width:0; }
 			.label { font-size:14px; margin:0 0 8px 0; }
-			.title { font-size:20px; font-weight:700; margin:0 0 12px 0; }
-			.body { margin:0 0 8px 0; max-width:640px; }
+			.title { font-size:20px; font-weight:700; margin:0 0 4px 0; }
+			.body + .title { margin-top:16px; }
+			.body { line-height:1.6; margin:0 0 4px 0; max-width:640px; }
 			.club { border-top:1px solid var(--ink); display:flex; flex-wrap:wrap; gap:4px 24px; padding:10px 0; }
 			.club .name { font-weight:700; text-decoration:none; }
 			.club .tags { margin-left:auto; }
 			.foot { margin-top:48px; }
 
-			@media (max-width:640px) { .rail { display:none; } .page { padding:16px 20px 48px 20px; } }
+			@media (max-width:640px) { .page { padding:16px 20px 48px 20px; } }
 		</style>
 		<script src="/index.js" type="module"></script>
 	</head>
 	<body>
 		<div class="page">
-			<div class="brand">clubs.fyi</div>
-			<div class="nav"><span>Cities</span><span>About</span><span>inbox@clubs.fyi</span></div>
+			<div class="brand"><span class="mark"><svg height="22" viewBox="0 0 34 22" width="34"><circle cx="12" cy="11" fill="none" r="9" stroke="currentColor" stroke-width="2"/><circle cx="22" cy="11" fill="none" r="9" stroke="currentColor" stroke-width="2"/></svg><span>clubs.fyi</span></span><button id="about">About</button></div>
+			<p class="tagline">Re-weaving the social fabric, one club at a time.</p>
 			<hr class="rule">
-			<div class="nav bold"><span>All Clubs</span><span>New York</span><span>Toronto</span><span>Search</span></div>
+			<div class="nav bold"><span class="kind">City</span><span id="filters"></span><input class="search" id="search" placeholder="Search" type="search"></div>
+			<div class="nav bold"><span class="kind">Tags</span><span id="tag-filters"></span><button id="clear">Clear</button></div>
 			<hr class="rule">
 			<div class="layout">
-				<div class="rail">clubs.fyi / new communities / re-weaving the social fabric</div>
 				<div class="main">
-					<p class="label">NEW /</p>
-					<p class="title">New communities</p>
-					<p class="body">Re-weaving the social fabric, one club at a time. A short list of clubs in each city.</p>
+					<p class="label" id="status"></p>
 					<div id="cities"></div>
 					<div class="foot">
 						<hr class="rule">
@@ -50,6 +73,32 @@
 						<p class="body"><a href="https://moralestapia.com/" target="_blank">moralestapia.com</a></p>
 					</div>
 				</div>
+			</div>
+		</div>
+		<div class="modal off" id="about-modal">
+			<div class="modal-box">
+				<div class="modal-head">
+					<p class="label">ABOUT /</p>
+					<button class="close" id="about-close">×</button>
+				</div>
+				<p class="title">What is clubs.fyi?</p>
+				<p class="body">clubs.fyi is a list of communities you can join in your city.</p>
+				<p class="body">No accounts, no ads, no noise, only clubs you can join today.</p>
+				<p class="body">New or old, big or small, a club is any group that fosters human connection.</p>
+				<p class="title">Who is behind clubs.fyi?</p>
+				<p class="body">clubs.fyi was created by <a href="https://www.linkedin.com/in/moralestapia/" target="_blank">Alex Morales</a>, but the project belongs to everybody.</p>
+				<p class="title">How can I help?</p>
+				<p class="body">Become an ambassador in your city and help curate the list.</p>
+				<p class="body">Been to a club? Send us your review and we will add it.</p>
+				<p class="body">Know a club we miss? Suggest it, no title needed.</p>
+				<p class="body">Your part makes the whole better.</p>
+				<p class="title">What does it mean for a club to be vouched?</p>
+				<p class="body">A vouched club is one we tried ourselves. A person from our team joined for real, became an active member, became a regular.</p>
+				<p class="body">They felt connection comes first, people gathered around what they love doing together. Not a performative act, nothing to show off.</p>
+				<p class="body">Members know your name, they are glad to see you and they welcome you back.</p>
+				<p class="title">Contact</p>
+				<p class="body">Questions, comments, suggestions, or just want to say hi?</p>
+				<p class="body">Send us an email at <a href="mailto:inbox@clubs.fyi">inbox@clubs.fyi</a>.</p>
 			</div>
 		</div>
 	</body>
