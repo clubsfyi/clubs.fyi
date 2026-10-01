@@ -160,4 +160,19 @@ window.addEventListener('load', async () => {
 
     apply();
   });
+
+  const cityRow = document.getElementById('city-row');
+
+  const narrow = window.matchMedia('(max-width:640px)');
+
+  const placeSearch = () => {
+    if(narrow.matches)
+      cityRow.before(search);
+    else
+      filters.after(search);
+  };
+
+  narrow.addEventListener('change', placeSearch);
+
+  placeSearch();
 });
