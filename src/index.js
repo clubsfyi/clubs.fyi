@@ -74,7 +74,7 @@ window.addEventListener('load', async () => {
     });
 
     if(total === 0)
-      status.textContent = 'Nothing matches those picks. Clear filters to see all clubs.';
+      status.textContent = 'No clubs match those filters. Clear them to see all clubs.';
 
     if(total > 0)
       status.textContent = '';
