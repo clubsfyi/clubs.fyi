@@ -1,10 +1,10 @@
-import { loadJson } from './clubs.fyi.js';
+import { loadJSON } from './clubs.fyi.js';
 import { appendClub, createCity, createFilter } from './clubs.fyi.ui.js';
 
 window.addEventListener('load', async () => {
   console.log(new Date().toISOString(), 'index.js', 'clubs.fyi');
 
-  const json = await loadJson();
+  const json = await loadJSON();
 
   const modal = document.getElementById('about-modal');
   const closeModal = () => modal.classList.add('off');
