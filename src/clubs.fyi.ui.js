@@ -22,25 +22,26 @@ export const appendClub = (city, club) => {
 
   row.append(name, tags);
 
-  if(club.url || club.instagram) {
+  if(club.url || club.instagram || club.review) {
     const details = document.createElement('div');
     details.className = 'details';
 
     const link = (label, href, text) => {
-      const cell = document.createElement('div');
-      cell.className = 'detail';
-
       const a = document.createElement('a');
+      a.className = 'detail';
       a.href = href;
-      a.textContent = text;
       a.target = '_blank';
       a.rel = 'noopener';
 
+      const value = document.createElement('span');
+      value.textContent = text;
+
       const title = document.createElement('span');
+      title.className = 'detail-label';
       title.textContent = label;
 
-      cell.append(a, title);
-      details.append(cell);
+      a.append(value, title);
+      details.append(a);
     };
 
     if(club.url) {
@@ -62,6 +63,42 @@ export const appendClub = (city, club) => {
       } catch {}
 
       link('Instagram', club.instagram, handle);
+    }
+
+    if(club.review) {
+      const separator = club.review.indexOf(':');
+      const id = (separator < 0 ? '' : club.review.slice(0, separator)).trim().replace(/^"|"$/g, '');
+      const person = club.team?.get(id);
+      const author = person?.Name || id;
+      const text = (separator < 0 ? club.review : club.review.slice(separator + 1)).trim().replace(/^"|"$/g, '');
+      const quote = document.createElement('blockquote');
+      quote.className = 'review';
+
+      const content = document.createElement('p');
+      const review = document.createElement('span');
+      review.textContent = text;
+      content.append(review);
+      quote.append(content);
+
+      if(author) {
+        const cite = document.createElement('cite');
+
+        if(person?.Photo) {
+          const photo = document.createElement('img');
+          photo.className = 'review-avatar';
+          photo.src = person.Photo;
+          photo.alt = '';
+          photo.addEventListener('error', () => photo.remove());
+          cite.append(photo);
+        }
+
+        const name = document.createElement('span');
+        name.textContent = author;
+        cite.append(name);
+        quote.append(cite);
+      }
+
+      details.append(quote);
     }
 
     row.append(details);

@@ -52,10 +52,14 @@
 			.club .name { font-weight:700; text-decoration:none; }
 			.club .tags { margin-left:auto; }
 			.club.expandable { cursor:pointer; }
-			.club .details { background:rgba(42,64,153,.05); cursor:auto; display:none; flex-basis:100%; flex-wrap:wrap; gap:12px 28px; margin:2px 0 2px; overflow-wrap:anywhere; padding:8px 12px; }
+			.club .details { background:rgba(42,64,153,.05); cursor:auto; display:none; flex-basis:100%; flex-wrap:wrap; gap:6px 28px; margin:2px 0 2px; overflow-wrap:anywhere; padding:8px 20px; }
 			.club.open .details { display:flex; }
-			.club .detail { display:flex; flex-direction:column; gap:0; min-width:0; }
-			.club .detail a { text-decoration:none; }
+			.club .detail { display:flex; flex-direction:column; font-weight:700; line-height:1.4; min-width:0; text-decoration:none; }
+			.club .detail-label { font-weight:400; padding-left:1px; }
+			.club .review { align-items:flex-start; border-top:1px solid rgba(42,64,153,.2); display:flex; flex-basis:100%; flex-wrap:wrap; gap:8px 16px; justify-content:space-between; margin:0; padding-top:6px; }
+			.club .review p { flex:1; font-size:16px; font-style:italic; line-height:1.4; margin:0; min-width:180px; }
+			.club .review cite { align-items:center; display:flex; font-size:15px; font-style:normal; gap:6px; justify-content:flex-end; margin-left:auto; text-align:right; }
+			.club .review-avatar { border:2px solid var(--ink); border-radius:50%; height:24px; object-fit:cover; width:24px; }
 			.club:focus-visible { outline:2px solid var(--ink); outline-offset:2px; }
 			.foot { margin-top:48px; }
 

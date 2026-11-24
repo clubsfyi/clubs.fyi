@@ -4,7 +4,9 @@ import { appendClub, createCity, createFilter } from './clubs.fyi.ui.js';
 window.addEventListener('load', async () => {
   console.log(new Date().toISOString(), 'index.js', 'clubs.fyi');
 
-  const json = await loadJSON();
+  const payload = await loadJSON();
+  const json = payload.clubs || payload;
+  const team = new Map((payload.team || []).map(person => [person.ID, person]));
 
   const modal = document.getElementById('about-modal');
   const closeModal = () => modal.classList.add('off');
@@ -92,7 +94,9 @@ window.addEventListener('load', async () => {
       name:item.Name,
       tags:normTags(item.Tags).join(', '),
       url:item['Website URL'],
-      instagram:item['Instagram URL']
+      instagram:item['Instagram URL'],
+      review:item.Reviews,
+      team
     }));
 
     cities.append(el);
