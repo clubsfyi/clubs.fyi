@@ -1,4 +1,4 @@
-import { loadJSON } from './clubs.fyi.js';
+import { loadCachedImage, loadJSON } from './clubs.fyi.js';
 import { appendClub, createCity, createFilter } from './clubs.fyi.ui.js';
 
 window.addEventListener('load', async () => {
@@ -10,6 +10,107 @@ window.addEventListener('load', async () => {
 
   const modal = document.getElementById('about-modal');
   const closeModal = () => modal.classList.add('off');
+  const teamModal = document.getElementById('team-modal');
+  const teamProfile = document.getElementById('team-profile');
+  const teamClose = document.getElementById('team-close');
+  let teamTrigger;
+  const closeTeamModal = () => {
+    if(teamModal.classList.contains('off'))
+      return;
+
+    teamModal.classList.add('off');
+    teamTrigger?.focus();
+  };
+  const openTeamModal = (person, trigger) => {
+    teamTrigger = trigger;
+    teamProfile.replaceChildren();
+    const heading = document.createElement('div');
+    heading.className = 'team-heading';
+
+    if(person.Photo) {
+      const photo = document.createElement('img');
+      photo.className = 'team-photo';
+      photo.alt = '';
+      loadCachedImage(photo, person.Photo, () => photo.remove());
+      heading.append(photo);
+    }
+
+    const identity = document.createElement('div');
+
+    if(person.Name) {
+      const name = document.createElement('p');
+      name.className = 'team-name';
+      name.textContent = person.Name;
+      identity.append(name);
+    }
+
+    if(person.City) {
+      const city = document.createElement('p');
+      city.className = 'team-city';
+      city.textContent = person.City;
+      identity.append(city);
+    }
+
+    heading.append(identity);
+    teamProfile.append(heading);
+
+    if(person.Description) {
+      const description = document.createElement('p');
+      description.className = 'team-description';
+      description.textContent = person.Description;
+      teamProfile.append(description);
+    }
+
+    const links = document.createElement('div');
+    links.className = 'team-links';
+
+    [['Website URL', 'Website'], ['Instagram URL', 'Instagram'], ['LinkedIn URL', 'LinkedIn']].forEach(([field, label]) => {
+      if(!person[field])
+        return;
+
+      const a = document.createElement('a');
+      a.className = 'team-link';
+      a.href = person[field];
+      a.target = '_blank';
+      a.rel = 'noopener';
+
+      let value = person[field];
+
+      try {
+        const url = new URL(person[field]);
+        const path = url.pathname.split('/').filter(Boolean);
+
+        value = url.hostname.replace(/^www\./, '');
+
+        if(label === 'Instagram' && path[0])
+          value = '@' + path[0];
+        else if(label === 'LinkedIn' && path.length)
+          value = path[path.length - 1];
+      } catch {}
+
+      const text = document.createElement('span');
+      text.textContent = value;
+
+      const title = document.createElement('span');
+      title.className = 'team-link-label';
+      title.textContent = label;
+
+      a.append(text, title);
+      links.append(a);
+    });
+
+    if(links.children.length)
+      teamProfile.append(links);
+
+    teamModal.classList.remove('off');
+    teamClose.focus();
+  };
+
+  teamClose.addEventListener('click', closeTeamModal);
+  teamModal.addEventListener('click', e => {
+    if(e.target === teamModal)
+      closeTeamModal();
+  });
 
   document.getElementById('about').addEventListener('click', () => modal.classList.remove('off'));
   document.getElementById('about-close').addEventListener('click', closeModal);
@@ -20,8 +121,10 @@ window.addEventListener('load', async () => {
   });
 
   window.addEventListener('keydown', e => {
-    if(e.key === 'Escape')
+    if(e.key === 'Escape') {
       closeModal();
+      closeTeamModal();
+    }
   });
 
   const cities = document.getElementById('cities');
@@ -101,7 +204,7 @@ window.addEventListener('load', async () => {
       instagram:item['Instagram URL'],
       review:item.Reviews,
       team
-    }));
+    }, openTeamModal));
 
     cities.append(el);
 

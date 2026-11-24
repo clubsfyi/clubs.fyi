@@ -1,4 +1,6 @@
-export const appendClub = (city, club) => {
+import { loadCachedImage } from './clubs.fyi.js';
+
+export const appendClub = (city, club, onTeamClick) => {
   const list = city.querySelector('.clubs');
 
   const row = document.createElement('div');
@@ -7,7 +9,7 @@ export const appendClub = (city, club) => {
   const identity = document.createElement('span');
   identity.className = 'identity';
 
-  const name = club.url ? document.createElement('a') : document.createElement('span');
+  const name = document.createElement('span');
   name.className = 'name';
   name.textContent = club.name;
 
@@ -17,10 +19,9 @@ export const appendClub = (city, club) => {
 
   if(club.logo) {
     const image = document.createElement('img');
-    image.src = club.logo;
     image.alt = '';
     image.loading = 'lazy';
-    image.addEventListener('error', () => {
+    loadCachedImage(image, club.logo, () => {
       logo.classList.add('placeholder');
       image.remove();
     });
@@ -43,12 +44,6 @@ export const appendClub = (city, club) => {
   if(club.nonprofit)
     badge('NONPROFIT');
 
-  if(club.url) {
-    name.href = club.url;
-    name.target = '_blank';
-    name.rel = 'noopener';
-  }
-
   const tags = document.createElement('span');
   tags.className = 'tags';
   tags.textContent = club.tags;
@@ -60,14 +55,13 @@ export const appendClub = (city, club) => {
     const person = club.team?.get(club.vouchedBy);
     const vouched = document.createElement('span');
     vouched.className = 'badge vouched';
-    vouched.title = 'Vouched by ' + (person?.Name || club.vouchedBy);
+    vouched.dataset.tooltip = 'Vouched by ' + (person?.Name || club.vouchedBy);
 
     const star = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     star.classList.add('vouched-star');
     star.setAttribute('viewBox', '0 0 24 24');
     star.setAttribute('width', '18');
     star.setAttribute('height', '18');
-    star.setAttribute('title', vouched.title);
     star.setAttribute('aria-hidden', 'true');
 
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -80,12 +74,15 @@ export const appendClub = (city, club) => {
     vouched.append(star);
 
     if(person?.Photo) {
+      vouched.classList.add('has-photo');
+
       const photo = document.createElement('img');
       photo.className = 'vouched-avatar';
-      photo.src = person.Photo;
       photo.alt = '';
-      photo.title = vouched.title;
-      photo.addEventListener('error', () => photo.remove());
+      loadCachedImage(photo, person.Photo, () => {
+        photo.remove();
+        vouched.classList.remove('has-photo');
+      });
       vouched.append(photo);
     }
 
@@ -158,19 +155,27 @@ export const appendClub = (city, club) => {
 
       if(author) {
         const cite = document.createElement('cite');
+        const byline = document.createElement(person ? 'button' : 'span');
+
+        if(person) {
+          byline.className = 'review-credit';
+          byline.type = 'button';
+          byline.setAttribute('aria-label', 'Open team member details for ' + author);
+          byline.addEventListener('click', () => onTeamClick(person, byline));
+        }
 
         if(person?.Photo) {
           const photo = document.createElement('img');
           photo.className = 'review-avatar';
-          photo.src = person.Photo;
           photo.alt = '';
-          photo.addEventListener('error', () => photo.remove());
-          cite.append(photo);
+          loadCachedImage(photo, person.Photo, () => photo.remove());
+          byline.append(photo);
         }
 
         const name = document.createElement('span');
         name.textContent = author;
-        cite.append(name);
+        byline.append(name);
+        cite.append(byline);
         quote.append(cite);
       }
 
@@ -186,7 +191,7 @@ export const appendClub = (city, club) => {
     const toggle = () => row.setAttribute('aria-expanded', row.classList.toggle('open'));
 
     row.addEventListener('click', e => {
-      if(e.target.closest('.name, .details'))
+      if(e.target.closest('.details'))
         return;
 
       toggle();

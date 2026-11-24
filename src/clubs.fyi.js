@@ -9,6 +9,29 @@ export const cacheHTTPKey = async url => {
     + (new URL(url).pathname.match(/\.[A-Za-z0-9]+$/)?.[0] ?? '');
 };
 
+export const loadCachedImage = async (image, url, onError = () => {}) => {
+  let triedOrigin = false;
+
+  const fallback = () => {
+    if(!triedOrigin) {
+      triedOrigin = true;
+      image.src = url;
+    } else {
+      image.removeEventListener('error', fallback);
+      onError();
+    }
+  };
+
+  image.addEventListener('error', fallback);
+
+  try {
+    image.src = 'https://cache.moralestapia.com/' + await cacheHTTPKey(url);
+  } catch {
+    triedOrigin = true;
+    image.src = url;
+  }
+};
+
 export const loadJSON = async () => {
   let res = undefined;
 

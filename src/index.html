@@ -48,15 +48,20 @@
 			.title { font-size:20px; font-weight:700; line-height:1.4; margin:0 0 4px 0; }
 			.body + .title { margin-top:16px; }
 			.body { line-height:1.6; margin:0 0 4px 0; max-width:640px; }
-			.club { border-top:1px solid var(--ink); display:flex; flex-wrap:wrap; gap:4px 24px; padding:8px 0; }
+			.club { border-top:1px solid var(--ink); display:flex; flex-wrap:wrap; gap:4px 24px; padding:6px 0; }
 			.club .name { font-weight:700; text-decoration:none; }
 			.club .identity { align-items:center; display:flex; gap:8px; min-width:0; }
 			.club .meta { align-items:center; display:flex; gap:12px; margin-left:auto; }
 			.club .badge { background:rgba(42,64,153,.08); border:1px solid rgba(42,64,153,.25); font-size:10px; font-weight:700; letter-spacing:.5px; line-height:1.2; padding:3px 5px 1px; user-select:none; }
 			.club .badge + .badge { margin-left:-4px; }
-			.club .vouched { align-items:center; background:none; border:0; display:inline-flex; gap:4px; padding:0; }
+			.club .vouched { align-items:center; background:none; border:0; display:inline-flex; gap:4px; padding:0; position:relative; }
 			.club .vouched-star { color:var(--ink); flex:0 0 18px; height:18px; user-select:none; width:18px; }
 			.club .vouched-avatar { border:2px solid var(--ink); border-radius:50%; height:24px; object-fit:cover; transform:translateY(-1px); width:24px; }
+			.club .vouched::after { background:var(--ink); border-radius:3px; bottom:calc(100% + 9px); color:var(--paper); content:attr(data-tooltip); font-size:14px; font-weight:400; left:50%; letter-spacing:normal; opacity:0; padding:5px 8px; pointer-events:none; position:absolute; text-align:left; transform:translateX(-50%); transition:opacity .15s; white-space:nowrap; z-index:20; }
+			.club .vouched::before { border-left:6px solid transparent; border-right:6px solid transparent; border-top:6px solid var(--ink); bottom:calc(100% + 3px); content:''; left:50%; opacity:0; pointer-events:none; position:absolute; transform:translateX(-50%); transition:opacity .15s; z-index:20; }
+			.club .vouched.has-photo::after { left:calc(100% - 12px); text-align:right; transform:translateX(-75%); }
+			.club .vouched.has-photo::before { left:calc(100% - 12px); }
+			.club .vouched:hover::after, .club .vouched:hover::before { opacity:1; }
 			.club .tags { font-size:14px; transform:translateY(1px); }
 			.club .logo { align-items:center; display:flex; flex:0 0 36px; height:36px; justify-content:center; position:relative; width:36px; }
 			.club .logo img { height:36px; object-fit:contain; width:36px; }
@@ -71,7 +76,19 @@
 			.club .review { align-items:flex-start; border-top:1px solid rgba(42,64,153,.2); display:flex; flex-basis:100%; flex-wrap:wrap; gap:8px 16px; justify-content:space-between; margin:0; padding-top:6px; }
 			.club .review p { flex:1; font-size:16px; font-style:italic; line-height:1.4; margin:0; min-width:180px; }
 			.club .review cite { align-items:center; display:flex; font-size:14px; font-style:normal; font-weight:700; gap:6px; justify-content:flex-end; margin-left:auto; text-align:right; }
-			.club .review-avatar { border:2px solid var(--ink); border-radius:50%; height:30px; object-fit:cover; width:30px; }
+			.club .review-credit { align-items:center; background:none; border:0; color:inherit; cursor:pointer; display:flex; font:inherit; gap:6px; padding:0; text-align:inherit; }
+			.club .review-credit:focus-visible { outline:2px solid var(--ink); outline-offset:2px; }
+			.club .review-avatar { border:2px solid var(--ink); border-radius:50%; height:24px; object-fit:cover; width:24px; }
+			.team-heading { align-items:center; display:flex; gap:32px; justify-content:center; margin:0 0 24px; }
+			.team-heading > div { min-width:0; }
+			.team-photo { border:4px solid var(--ink); border-radius:50%; flex:0 0 96px; height:96px; object-fit:cover; width:96px; }
+			.team-name { font-size:36px; font-weight:700; letter-spacing:-0.4px; line-height:1.15; margin:0; }
+			.team-city { font-size:22px; line-height:1.25; margin:0; }
+			.team-description { font-size:16px; line-height:1.6; margin:0 0 8px; }
+			.team-links { display:grid; gap:12px 28px; grid-template-columns:repeat(2, minmax(0, 1fr)); margin:12px 0 0; }
+			.team-link { display:flex; flex-direction:column; font-weight:700; line-height:1.4; min-width:0; overflow-wrap:anywhere; padding:4px 8px; text-decoration:none; }
+			.team-link:hover { background:rgba(42,64,153,.08); }
+			.team-link-label { font-weight:400; padding-left:1px; }
 			.club:focus-visible { outline:2px solid var(--ink); outline-offset:2px; }
 			.foot { margin-top:48px; }
 
@@ -122,6 +139,15 @@
 				<p class="body">Comments, questions, suggestions, or just want to say hi?</p>
 				<p class="body">Send us an email at <a href="mailto:inbox@clubs.fyi">inbox@clubs.fyi</a>.</p>
 				</div>
+			</div>
+		</div>
+		<div aria-labelledby="team-modal-label" aria-modal="true" class="modal off" id="team-modal" role="dialog">
+			<div class="modal-box">
+				<div class="modal-head">
+					<p class="label" id="team-modal-label">TEAM /</p>
+					<button aria-label="Close" class="close" id="team-close">×</button>
+				</div>
+				<div class="modal-scroll" id="team-profile"></div>
 			</div>
 		</div>
 	</body>
