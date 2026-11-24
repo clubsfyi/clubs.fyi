@@ -48,17 +48,21 @@
 			.title { font-size:20px; font-weight:700; line-height:1.4; margin:0 0 4px 0; }
 			.body + .title { margin-top:16px; }
 			.body { line-height:1.6; margin:0 0 4px 0; max-width:640px; }
-			.club { border-top:1px solid var(--ink); display:flex; flex-wrap:wrap; gap:4px 24px; padding:10px 0; }
+			.club { border-top:1px solid var(--ink); display:flex; flex-wrap:wrap; gap:4px 24px; padding:8px 0; }
 			.club .name { font-weight:700; text-decoration:none; }
 			.club .identity { align-items:center; display:flex; gap:8px; min-width:0; }
+			.club .meta { align-items:center; display:flex; gap:12px; margin-left:auto; }
 			.club .badge { background:rgba(42,64,153,.08); border:1px solid rgba(42,64,153,.25); font-size:10px; font-weight:700; letter-spacing:.5px; line-height:1.2; padding:3px 5px 1px; user-select:none; }
 			.club .badge + .badge { margin-left:-4px; }
-			.club .logo { align-items:center; display:flex; flex:0 0 32px; height:32px; justify-content:center; position:relative; width:32px; }
-			.club .logo img { height:32px; object-fit:contain; width:32px; }
+			.club .vouched { align-items:center; background:none; border:0; display:inline-flex; gap:4px; padding:0; }
+			.club .vouched-star { color:var(--ink); flex:0 0 18px; height:18px; user-select:none; width:18px; }
+			.club .vouched-avatar { border:2px solid var(--ink); border-radius:50%; height:24px; object-fit:cover; transform:translateY(-1px); width:24px; }
+			.club .tags { font-size:14px; transform:translateY(1px); }
+			.club .logo { align-items:center; display:flex; flex:0 0 36px; height:36px; justify-content:center; position:relative; width:36px; }
+			.club .logo img { height:36px; object-fit:contain; width:36px; }
 			.club .logo.placeholder::before, .club .logo.placeholder::after { border:1px solid rgba(42,64,153,.35); border-radius:50%; content:''; height:10px; position:absolute; width:10px; }
-			.club .logo.placeholder::before { left:7px; }
-			.club .logo.placeholder::after { right:7px; }
-			.club .tags { margin-left:auto; }
+			.club .logo.placeholder::before { left:9px; }
+			.club .logo.placeholder::after { right:9px; }
 			.club.expandable { cursor:pointer; }
 			.club .details { background:rgba(42,64,153,.05); cursor:auto; display:none; flex-basis:100%; flex-wrap:wrap; gap:6px 28px; margin:2px 0 2px; overflow-wrap:anywhere; padding:8px 20px; }
 			.club.open .details { display:flex; }
@@ -66,8 +70,8 @@
 			.club .detail-label { font-weight:400; padding-left:1px; }
 			.club .review { align-items:flex-start; border-top:1px solid rgba(42,64,153,.2); display:flex; flex-basis:100%; flex-wrap:wrap; gap:8px 16px; justify-content:space-between; margin:0; padding-top:6px; }
 			.club .review p { flex:1; font-size:16px; font-style:italic; line-height:1.4; margin:0; min-width:180px; }
-			.club .review cite { align-items:center; display:flex; font-size:15px; font-style:normal; gap:6px; justify-content:flex-end; margin-left:auto; text-align:right; }
-			.club .review-avatar { border:2px solid var(--ink); border-radius:50%; height:24px; object-fit:cover; width:24px; }
+			.club .review cite { align-items:center; display:flex; font-size:14px; font-style:normal; font-weight:700; gap:6px; justify-content:flex-end; margin-left:auto; text-align:right; }
+			.club .review-avatar { border:2px solid var(--ink); border-radius:50%; height:30px; object-fit:cover; width:30px; }
 			.club:focus-visible { outline:2px solid var(--ink); outline-offset:2px; }
 			.foot { margin-top:48px; }
 

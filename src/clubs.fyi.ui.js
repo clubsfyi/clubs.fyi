@@ -53,9 +53,50 @@ export const appendClub = (city, club) => {
   tags.className = 'tags';
   tags.textContent = club.tags;
 
+  const meta = document.createElement('span');
+  meta.className = 'meta';
+
+  if(club.vouchedBy) {
+    const person = club.team?.get(club.vouchedBy);
+    const vouched = document.createElement('span');
+    vouched.className = 'badge vouched';
+    vouched.title = 'Vouched by ' + (person?.Name || club.vouchedBy);
+
+    const star = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    star.classList.add('vouched-star');
+    star.setAttribute('viewBox', '0 0 24 24');
+    star.setAttribute('width', '18');
+    star.setAttribute('height', '18');
+    star.setAttribute('title', vouched.title);
+    star.setAttribute('aria-hidden', 'true');
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', 'M12 2.5 14.9 8.45 21.5 9.4 16.75 14.05 17.9 20.6 12 17.5 6.1 20.6 7.25 14.05 2.5 9.4 9.1 8.45Z');
+    path.setAttribute('fill', 'currentColor');
+    path.setAttribute('stroke', 'currentColor');
+    path.setAttribute('stroke-width', '0.8');
+    path.setAttribute('stroke-linejoin', 'round');
+    star.append(path);
+    vouched.append(star);
+
+    if(person?.Photo) {
+      const photo = document.createElement('img');
+      photo.className = 'vouched-avatar';
+      photo.src = person.Photo;
+      photo.alt = '';
+      photo.title = vouched.title;
+      photo.addEventListener('error', () => photo.remove());
+      vouched.append(photo);
+    }
+
+    meta.append(vouched);
+  }
+
+  meta.append(tags);
+
   row.dataset.tags = club.tags;
 
-  row.append(identity, tags);
+  row.append(identity, meta);
 
   if(club.url || club.instagram || club.review) {
     const details = document.createElement('div');
