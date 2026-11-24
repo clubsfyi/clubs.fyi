@@ -51,6 +51,12 @@
 			.club { border-top:1px solid var(--ink); display:flex; flex-wrap:wrap; gap:4px 24px; padding:10px 0; }
 			.club .name { font-weight:700; text-decoration:none; }
 			.club .tags { margin-left:auto; }
+			.club.expandable { cursor:pointer; }
+			.club .details { background:rgba(42,64,153,.05); cursor:auto; display:none; flex-basis:100%; flex-wrap:wrap; gap:12px 28px; margin:2px 0 2px; overflow-wrap:anywhere; padding:8px 12px; }
+			.club.open .details { display:flex; }
+			.club .detail { display:flex; flex-direction:column; gap:0; min-width:0; }
+			.club .detail a { text-decoration:none; }
+			.club:focus-visible { outline:2px solid var(--ink); outline-offset:2px; }
 			.foot { margin-top:48px; }
 
 			@media (max-width:640px) { .page { padding:16px 20px 48px 20px; } .search { margin-bottom:12px; margin-left:0; width:100%; } .modal-box { padding:32px 20px; } }
