@@ -12,7 +12,7 @@ export const cacheHTTPKey = async url => {
 export const loadJSON = async () => {
   let res = undefined;
 
-  try { res = await fetch('https://cache.moralestapia.com/data.json'); } catch {}
+  try { res = await fetch('https://cache.moralestapia.com/clubs.fyi/data.json'); } catch {}
 
   if(!res || !res.ok)
     try { res = await fetch(url); } catch {}
