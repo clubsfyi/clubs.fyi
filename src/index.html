@@ -50,6 +50,12 @@
 			.body { line-height:1.6; margin:0 0 4px 0; max-width:640px; }
 			.club { border-top:1px solid var(--ink); display:flex; flex-wrap:wrap; gap:4px 24px; padding:10px 0; }
 			.club .name { font-weight:700; text-decoration:none; }
+			.club .identity { align-items:center; display:flex; gap:8px; min-width:0; }
+			.club .logo { align-items:center; display:flex; flex:0 0 32px; height:32px; justify-content:center; position:relative; width:32px; }
+			.club .logo img { height:32px; object-fit:contain; width:32px; }
+			.club .logo.placeholder::before, .club .logo.placeholder::after { border:1px solid rgba(42,64,153,.35); border-radius:50%; content:''; height:10px; position:absolute; width:10px; }
+			.club .logo.placeholder::before { left:7px; }
+			.club .logo.placeholder::after { right:7px; }
 			.club .tags { margin-left:auto; }
 			.club.expandable { cursor:pointer; }
 			.club .details { background:rgba(42,64,153,.05); cursor:auto; display:none; flex-basis:100%; flex-wrap:wrap; gap:6px 28px; margin:2px 0 2px; overflow-wrap:anywhere; padding:8px 20px; }

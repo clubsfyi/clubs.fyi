@@ -93,6 +93,7 @@ window.addEventListener('load', async () => {
     clubs.forEach(item => appendClub(el, {
       name:item.Name,
       tags:normTags(item.Tags).join(', '),
+      logo:item.Logo,
       url:item['Website URL'],
       instagram:item['Instagram URL'],
       review:item.Reviews,

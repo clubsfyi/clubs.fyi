@@ -4,9 +4,31 @@ export const appendClub = (city, club) => {
   const row = document.createElement('div');
   row.className = 'club';
 
+  const identity = document.createElement('span');
+  identity.className = 'identity';
+
   const name = club.url ? document.createElement('a') : document.createElement('span');
   name.className = 'name';
   name.textContent = club.name;
+
+  const logo = document.createElement('span');
+  logo.className = 'logo';
+  logo.setAttribute('aria-hidden', 'true');
+
+  if(club.logo) {
+    const image = document.createElement('img');
+    image.src = club.logo;
+    image.alt = '';
+    image.loading = 'lazy';
+    image.addEventListener('error', () => {
+      logo.classList.add('placeholder');
+      image.remove();
+    });
+    logo.append(image);
+  } else
+    logo.classList.add('placeholder');
+
+  identity.append(logo, name);
 
   if(club.url) {
     name.href = club.url;
@@ -20,7 +42,7 @@ export const appendClub = (city, club) => {
 
   row.dataset.tags = club.tags;
 
-  row.append(name, tags);
+  row.append(identity, tags);
 
   if(club.url || club.instagram || club.review) {
     const details = document.createElement('div');
