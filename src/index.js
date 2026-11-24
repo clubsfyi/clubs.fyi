@@ -53,7 +53,7 @@ window.addEventListener('load', async () => {
     let total = 0;
 
     cities.querySelectorAll('.city').forEach(el => {
-      const hideCity = sel.size && !sel.has(el.dataset.city);
+      const hideCity = sel.size && !sel.has(el.dataset.tag);
 
       let shown = 0;
 
@@ -97,6 +97,12 @@ window.addEventListener('load', async () => {
     cities.append(el);
 
     const button = createFilter(name);
+
+    if(name === 'Toronto') {
+      sel.add(name);
+
+      button.classList.add('on');
+    }
 
     button.addEventListener('click', () => {
       if(sel.has(name)) {

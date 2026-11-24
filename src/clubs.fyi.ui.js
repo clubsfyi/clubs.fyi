@@ -29,7 +29,7 @@ export const appendClub = (city, club) => {
 export const createCity = name => {
   const city = document.createElement('div');
   city.className = 'city';
-  city.dataset.city = name;
+  city.dataset.tag = name;
 
   const rule = document.createElement('hr');
   rule.className = 'rule';
@@ -52,7 +52,7 @@ export const createCity = name => {
 
 export const createFilter = name => {
   const button = document.createElement('button');
-  button.dataset.city = name;
+  button.dataset.tag = name;
   button.textContent = name;
 
   return button;
