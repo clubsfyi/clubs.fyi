@@ -30,6 +30,19 @@ export const appendClub = (city, club) => {
 
   identity.append(logo, name);
 
+  const badge = text => {
+    const el = document.createElement('span');
+    el.className = 'badge';
+    el.textContent = text;
+    identity.append(el);
+  };
+
+  if(club.free)
+    badge('FREE');
+
+  if(club.nonprofit)
+    badge('NONPROFIT');
+
   if(club.url) {
     name.href = club.url;
     name.target = '_blank';

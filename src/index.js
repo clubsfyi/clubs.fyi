@@ -8,6 +8,10 @@ window.addEventListener('load', async () => {
   const json = payload.clubs || payload;
   const team = new Map((payload.team || []).map(person => [person.ID, person]));
 
+  // Debug: simulate the future field until it is included in the payload.
+  json.filter(item => ['Toronto Sailing & Canoe Club', 'Creative Code Toronto'].includes(item.Name))
+    .forEach(item => item.Nonprofit = 'TRUE');
+
   const modal = document.getElementById('about-modal');
   const closeModal = () => modal.classList.add('off');
 
@@ -94,6 +98,8 @@ window.addEventListener('load', async () => {
       name:item.Name,
       tags:normTags(item.Tags).join(', '),
       logo:item.Logo,
+      free:item.Free === 'TRUE',
+      nonprofit:item.Nonprofit === 'TRUE',
       url:item['Website URL'],
       instagram:item['Instagram URL'],
       review:item.Reviews,

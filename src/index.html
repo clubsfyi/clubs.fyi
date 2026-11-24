@@ -51,6 +51,8 @@
 			.club { border-top:1px solid var(--ink); display:flex; flex-wrap:wrap; gap:4px 24px; padding:10px 0; }
 			.club .name { font-weight:700; text-decoration:none; }
 			.club .identity { align-items:center; display:flex; gap:8px; min-width:0; }
+			.club .badge { background:rgba(42,64,153,.08); border:1px solid rgba(42,64,153,.25); font-size:10px; font-weight:700; letter-spacing:.5px; line-height:1.2; padding:3px 5px 1px; user-select:none; }
+			.club .badge + .badge { margin-left:-4px; }
 			.club .logo { align-items:center; display:flex; flex:0 0 32px; height:32px; justify-content:center; position:relative; width:32px; }
 			.club .logo img { height:32px; object-fit:contain; width:32px; }
 			.club .logo.placeholder::before, .club .logo.placeholder::after { border:1px solid rgba(42,64,153,.35); border-radius:50%; content:''; height:10px; position:absolute; width:10px; }
