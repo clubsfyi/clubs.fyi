@@ -16,7 +16,7 @@ const tagsObserver = typeof ResizeObserver === 'undefined' ? null : new ResizeOb
   const lists = new Set(entries.map(({ target }) => target.id === 'cities' ? target : target.closest('#cities')).filter(Boolean));
 
   lists.forEach(list => {
-    if(!window.matchMedia('(max-width:800px)').matches) {
+    if(!window.matchMedia('(max-width:640px)').matches) {
       list.classList.remove('tags-stacked');
       stackedAt.delete(list);
       return;
