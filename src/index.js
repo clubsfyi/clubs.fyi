@@ -197,6 +197,7 @@ window.addEventListener('load', async () => {
       name:item.Name,
       tags:normTags(item.Tags).join(', '),
       logo:item.Logo,
+      logoBackground:item['Logo Background'],
       free:item.Free === 'TRUE',
       nonprofit:item.Nonprofit === 'TRUE',
       vouchedBy:item['Vouched By'],

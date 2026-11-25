@@ -70,6 +70,10 @@ export const appendClub = (city, club, onTeamClick) => {
     const image = document.createElement('img');
     image.alt = '';
     image.loading = 'lazy';
+
+    if(club.logoBackground)
+      image.style.background = club.logoBackground;
+
     loadCachedImage(image, club.logo, () => {
       logo.classList.add('placeholder');
       image.remove();
