@@ -49,8 +49,8 @@
 			.body + .title { margin-top:16px; }
 			.body { line-height:1.6; margin:0 0 4px 0; max-width:640px; }
 			.club { border-top:1px solid var(--ink); display:flex; flex-wrap:wrap; gap:4px 24px; padding:6px 0; }
-			.club .name { font-weight:700; text-decoration:none; }
-			.club .identity { align-items:center; display:flex; gap:8px; min-width:0; }
+			.club .name { flex:0 1 auto; font-weight:700; min-width:0; overflow:hidden; text-decoration:none; text-overflow:ellipsis; white-space:nowrap; }
+			.club .identity { align-items:center; display:flex; flex:1 1 0; gap:8px; min-width:0; }
 			.club .meta { align-items:center; display:flex; gap:12px; margin-left:auto; }
 			.club .badge { background:rgba(42,64,153,.08); border:1px solid rgba(42,64,153,.25); font-size:10px; font-weight:700; letter-spacing:.5px; line-height:1.2; padding:3px 5px 1px; user-select:none; }
 			.club .badge + .badge { margin-left:-4px; }
