@@ -31,6 +31,15 @@ const tagsObserver = typeof ResizeObserver === 'undefined' ? null : new ResizeOb
 
       list.classList.remove('tags-stacked');
       stackedAt.delete(list);
+
+      requestAnimationFrame(() => {
+        if(window.matchMedia('(max-width:640px)').matches && hasWrappedTags(list)) {
+          list.classList.add('tags-stacked');
+          stackedAt.set(list, list.clientWidth);
+        }
+      });
+
+      return;
     }
 
     if(hasWrappedTags(list)) {
