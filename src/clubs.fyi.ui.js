@@ -138,6 +138,8 @@ export const appendClub = (city, club, onTeamClick) => {
   if(club.url || club.instagram || club.review) {
     const details = document.createElement('div');
     details.className = 'details';
+    const detailsContent = document.createElement('div');
+    detailsContent.className = 'details-inner';
 
     const link = (label, href, text) => {
       const a = document.createElement('a');
@@ -154,7 +156,7 @@ export const appendClub = (city, club, onTeamClick) => {
       title.textContent = label;
 
       a.append(value, title);
-      details.append(a);
+      detailsContent.append(a);
     };
 
     if(club.url) {
@@ -187,11 +189,11 @@ export const appendClub = (city, club, onTeamClick) => {
       const quote = document.createElement('blockquote');
       quote.className = 'review';
 
-      const content = document.createElement('p');
+      const reviewContent = document.createElement('p');
       const review = document.createElement('span');
       review.textContent = text;
-      content.append(review);
-      quote.append(content);
+      reviewContent.append(review);
+      quote.append(reviewContent);
 
       if(author) {
         const cite = document.createElement('cite');
@@ -219,9 +221,10 @@ export const appendClub = (city, club, onTeamClick) => {
         quote.append(cite);
       }
 
-      details.append(quote);
+      detailsContent.append(quote);
     }
 
+    details.append(detailsContent);
     row.append(details);
     row.classList.add('expandable');
     row.tabIndex = 0;

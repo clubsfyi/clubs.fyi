@@ -70,8 +70,11 @@
 			.club .logo.placeholder::before { left:9px; }
 			.club .logo.placeholder::after { right:9px; }
 			.club.expandable { cursor:pointer; }
-			.club .details { background:rgba(42,64,153,.05); cursor:auto; display:none; flex-basis:100%; flex-wrap:wrap; gap:6px 28px; margin:2px 0 2px; overflow-wrap:anywhere; padding:8px 20px; }
-			.club.open .details { display:flex; }
+			.club .details { cursor:auto; display:none; flex-basis:100%; grid-template-rows:0fr; margin:0; opacity:0; overflow:hidden; transition:grid-template-rows .24s ease, margin .24s ease, opacity .18s ease, display .24s allow-discrete; }
+			.club.open .details { display:grid; grid-template-rows:1fr; margin:2px 0; opacity:1; }
+			.club .details-inner { background:rgba(42,64,153,.05); display:flex; flex-wrap:wrap; gap:6px 28px; min-height:0; overflow:hidden; overflow-wrap:anywhere; padding:8px 20px; }
+			@starting-style { .club.open .details { grid-template-rows:0fr; margin:0; opacity:0; } }
+			@media (prefers-reduced-motion:reduce) { .club .details { transition:none; } }
 			.club .detail { display:flex; flex-direction:column; font-weight:700; line-height:1.4; min-width:0; text-decoration:none; }
 			.club .detail-label { font-weight:400; padding-left:1px; }
 			.club .review { align-items:flex-start; border-top:1px solid rgba(42,64,153,.2); display:flex; flex-basis:100%; flex-wrap:wrap; gap:8px 16px; justify-content:space-between; margin:0; padding-top:6px; }
