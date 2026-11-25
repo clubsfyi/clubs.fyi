@@ -1,5 +1,45 @@
 import { loadCachedImage } from './clubs.fyi.js';
 
+const stackedAt = new WeakMap();
+
+const hasWrappedTags = list => [...list.querySelectorAll('.club')].some(row => {
+  if(!row.getClientRects().length)
+    return false;
+
+  const identity = row.querySelector('.identity');
+  const tags = row.querySelector('.tags');
+
+  return identity && tags && tags.getBoundingClientRect().top > identity.getBoundingClientRect().top + 1;
+});
+
+const tagsObserver = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(entries => {
+  const lists = new Set(entries.map(({ target }) => target.id === 'cities' ? target : target.closest('#cities')).filter(Boolean));
+
+  lists.forEach(list => {
+    if(!window.matchMedia('(max-width:800px)').matches) {
+      list.classList.remove('tags-stacked');
+      stackedAt.delete(list);
+      return;
+    }
+
+    const width = list.clientWidth;
+    const stackedWidth = stackedAt.get(list);
+
+    if(list.classList.contains('tags-stacked')) {
+      if(width <= stackedWidth + 1)
+        return;
+
+      list.classList.remove('tags-stacked');
+      stackedAt.delete(list);
+    }
+
+    if(hasWrappedTags(list)) {
+      list.classList.add('tags-stacked');
+      stackedAt.set(list, width);
+    }
+  });
+});
+
 export const appendClub = (city, club, onTeamClick) => {
   const list = city.querySelector('.clubs');
 
@@ -210,6 +250,7 @@ export const appendClub = (city, club, onTeamClick) => {
   }
 
   list.append(row);
+  requestAnimationFrame(() => tagsObserver?.observe(row));
 
   return row;
 };
